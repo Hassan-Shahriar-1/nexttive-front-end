@@ -13,6 +13,10 @@ import admin from '@/components/admin/admin-login'
 import adminDashboard from '@/components/admin/admin-dashboard'
 import adminNav from '@/components/admin/admin-nav'
 import categoryAll from '@/components/admin/category-all'
+import allPost from '@/components/all-post';
+import createPost from '@/components/admin/create-post'
+Vue.component('create-post',createPost)
+Vue.component('post-list-admin',allPost);
 Vue.component('admin-nav',adminNav)
 Vue.component('all-post',post)
 Vue.component('admin-login',admin)

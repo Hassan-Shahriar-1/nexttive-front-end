@@ -14,8 +14,8 @@
         
                
                <div class="card-body p-1 " v-show="menu" style="height:auto;">
-                    <div class="dvclr rounded p-3 my-2">List</div>
-                    <div class="dvclr rounded p-3 my-2">Create</div>
+                    <div class="dvclr rounded p-3 my-2" @click="load_component('ad_post_list')">List</div>
+                    <div class="dvclr rounded p-3 my-2" @click="load_component('ad_post_Create')">Create</div>
                   
                 </div>
                  <div class="card-footer   px-0 py-3 bg-dark text-white " @click="load_component('category')">Category &nbsp;&nbsp;  </div>
@@ -26,6 +26,16 @@
             <div class="col-9">
                     <div v-if="comp['category']==true">
                         <category-page></category-page>
+                    </div>
+                    <div v-else-if="comp['ad_post_list']==true">
+                    <post-list-admin></post-list-admin>
+                    </div>
+                    <div v-else-if="comp['ad_post_Create']==true">
+                    <create-post></create-post>
+                    </div>
+                    <div v-else>
+                        <h1>home page</h1>
+                    
                     </div>
             </div>
 
