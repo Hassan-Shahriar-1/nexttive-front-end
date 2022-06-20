@@ -13,12 +13,15 @@ import admin from '@/components/admin/admin-login'
 import adminDashboard from '@/components/admin/admin-dashboard'
 import adminNav from '@/components/admin/admin-nav'
 import categoryAll from '@/components/admin/category-all'
-import allPost from '@/components/all-post';
+import adminallPost from '@/components/admin/admin-post-list'
 import createPost from '@/components/admin/create-post'
+import editPost from '@/components/admin/admin-edit-post'
 Vue.component('create-post',createPost)
-Vue.component('post-list-admin',allPost);
+Vue.component('admin-edit',editPost)
+Vue.component('post-list-admin',adminallPost);
 Vue.component('admin-nav',adminNav)
 Vue.component('all-post',post)
+
 Vue.component('admin-login',admin)
 Vue.component('admin-dashboard',adminDashboard)
 Vue.component('category-page',categoryAll)

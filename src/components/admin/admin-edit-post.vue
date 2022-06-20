@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <div v-if="msg!=''"><h1 class="text-success">{{msg}}</h1></div>
+<div>
+
+<h1 class="mt-5" v-if="form==false">No data Found</h1>
+<div >
+    <div v-if="msg!=''"><h1 class="text-success">{{msg}}</h1></div>
 
         <div class="container mt-4 mb-4">
     <div class="row justify-content-md-center mt-5">
@@ -8,12 +11,12 @@
             <h1 class="h2 mb-4  text-center">Submit issue</h1>
             <div class="form-group">
                 <label for="name">Post Title</label>
-                <input type="text" v-model="title" class="form-control" id="name" placeholder="Your name"/>
+                <input type="text" :value="data.title" class="form-control" id="title" />
             </div>
 
             <div class="form-group">
               <label for="email">description</label>
-              <textarea class="form-control" id="email" v-model="description" ></textarea>
+              <textarea class="form-control" id="description" :value="data.description" ></textarea>
               
             </div>
 
@@ -40,40 +43,54 @@
             <hr>
 
         <div class="col-12 text-center">
-            <button type="submit" class="btn text-center btn-primary" @click="post_insert()">Post Now</button>
+            <button  class="btn text-center btn-primary" @click="post_update(post_id)">Update Now</button>
         </div>
         </div>
     </div>
+    </div>
 </div>
 </div>
-
 </template>
-
 <script>
-    export default{
-        data() {
-            return {
-                title:'',
-                description:'',
-                sts:'',
-                categories:[],
-                selectedcat:'',
-                db_cat:'',
-                msg:''
-            }
-        },
-        beforeCreate() {
-            this.axios.get('/category/list').then((res)=>{
+export default{
+    props:{
+        post_id:{type:Number,required:true}
+    },
+    data() {
+        return {
+            form:false,
+            data:'',
+            sts:'',
+            categories:[],
+            db_cat:'',
+            msg:'',
+        }
+    },
+    beforeCreate() {
+        this.axios.get('/category/list').then((res)=>{
                 if(res.sts=='cat-data'){
                     this.db_cat=res.data
                 }
             })
-        },
-        methods: {
-            post_insert(){
-               
-                this.axios.post('/posts/create',{'title':this.title,'description':this.description,'sts':this.sts,'categories':this.categories}).then((res)=>{
-                    if(res.sts=='inserted'){
+    },
+
+    created() {
+        console.log('props',this.$props['post_id'])
+        this.axios.get('/posts/edit/'+this.$props['post_id']).then((res)=>{
+            if(res.sts=='found'){
+                this.form=true,
+                this.data=res.data
+                this.categories=res.data.category.split(' ')
+                console.log('strin',this.categories)
+            }
+        })
+    },
+    methods: {
+         post_update(pid){
+              let dtl= document.getElementById("description").value 
+              let tl=document.getElementById("title").value 
+                this.axios.post('/posts/update/'+pid,{'title':tl,'description':dtl,'sts':this.sts,'categories':this.categories}).then((res)=>{
+                    if(res.sts=='updated'){
                         this.msg=res.msg
                     }
                 })
@@ -89,7 +106,6 @@
             remove(i){
                 this.categories.splice(i,1)
             }
-        },
-    }
-
+    },
+}
 </script>

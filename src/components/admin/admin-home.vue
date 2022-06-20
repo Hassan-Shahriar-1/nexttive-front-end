@@ -6,6 +6,7 @@
         <div v-else><admin-dashboard></admin-dashboard></div>
     </div>
 </template>
+
 <script>
 export default{
     data() {

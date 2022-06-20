@@ -49,6 +49,9 @@
 </template>
 <style scoped>
     @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css);
+
+@import url(https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css);
+
 .dvclr{
     background: rgb(34, 26, 26);
 background: linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(250,250,250,1) 48%, rgba(240,240,240,1) 100%);
