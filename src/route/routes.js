@@ -5,7 +5,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-    /*  mode:'history', */
+     mode:'history',
     routes: [
 
         {
@@ -13,5 +13,11 @@ export default new Router({
             
             component: () =>
                 import ('../components/my-home')
+        },
+        {
+            path: '/admin',
+            name:'admin',
+            component: () =>
+                import ('../components/admin/admin-home')
         },
     ]})

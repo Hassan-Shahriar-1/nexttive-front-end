@@ -15,7 +15,7 @@
                     <a class="nav-link" @click="render_components('post')">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" @click="render_components('admin')">Login</a>
+                   <router-link to="/admin"><a class="nav-link">Login</a></router-link> 
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,9 +39,7 @@
                       <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
+                  
                 </ul>
               </div>
             </div>
@@ -51,10 +49,7 @@
         <all-post :postlist="post_data"></all-post>
 
         </div>
-        <div v-if="comp['admin']==true">
-            <admin-login></admin-login>
-
-        </div>
+        
     
     <div>
           <section id="footer">
@@ -75,7 +70,8 @@
 export default{
     data() {
         return {
-            post_data: "",
+            post_data: '',
+            logout:false,
             //admin:false,
             //post:false,
             comp: {
@@ -91,10 +87,20 @@ export default{
                 this.post_data = res.data;
             }
         });
+
+         if(this.axios.defaults.headers.Authorization!='Bearer '+null){
+          console.log('working',this.axios.defaults.headers.Authorization)
+          this.logout=true
+        }
+        
     },
     created() {
         this.comp["post"] = true;
+       
+        //this.$check.lgnchk(this)
     },
+    
+    
     methods: {
         render_components(val) {
             console.log("value heeee", val);
@@ -106,6 +112,17 @@ export default{
                     this.comp[el] = true;
                 }
             });
+        },
+        logoutadmin(){
+          this.axios.post('/logout').then((res)=>{
+                console.log(res)
+                if(res.message== 'User successfully signed out'){
+                  window.localStorage.setItem('Usrtkn',null)
+                  this.logout=false;
+                  this.$router.go();
+                  
+                }
+          })
         }
     },
     

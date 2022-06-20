@@ -10,8 +10,14 @@ import check from './plugins/logincheck'
 
 import post from './components/all-post'
 import admin from '@/components/admin/admin-login'
+import adminDashboard from '@/components/admin/admin-dashboard'
+import adminNav from '@/components/admin/admin-nav'
+import categoryAll from '@/components/admin/category-all'
+Vue.component('admin-nav',adminNav)
 Vue.component('all-post',post)
 Vue.component('admin-login',admin)
+Vue.component('admin-dashboard',adminDashboard)
+Vue.component('category-page',categoryAll)
 Vue.use(bootstrap)
 Vue.use(vueAxios,axios)
 Vue.use(router);
@@ -30,8 +36,8 @@ Vue.axios.interceptors.response.use(function(response) {
   return response.data;
 }, function(error) {
   console.log(error.response.data.error);
-  if (error.response.data.error == 'Tkntfnd') {
-      //router.go();
+  if (error.response.data.error == 'tknfnd') {
+      router.go();
   }
 
 });
